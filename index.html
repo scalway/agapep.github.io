@@ -35,7 +35,7 @@
     <div class="slides">
         <section>
             <h1>
-                Scala my Android
+                Scala on Android
                 <img src="assets/images/scala_love_android.jpg" alt="scala"/>
             </h1>
             <script>
@@ -112,8 +112,8 @@
           <section>
             <h2>Variables vs. Values</h2>
             Coding like a <b>final</b> nazi!
-            <pre><code contenteditable class="java">val conference = "Mobilizejszon"
-// conference = "mobilization" // compile error val == "java final"
+            <pre><code contenteditable class="java">val conference = "AndroidDeveloperBackstage"
+// conference = "AndroidDeveloperBackstage" // compile error val == "java final"
 
 var age = 90
 age = 2
@@ -123,9 +123,9 @@ age = 2
               The <b>Type</b> was inferred. <br/>
               You can type it though:
 
-              <pre><code contenteditable class="java">val name: String = "Mobilization"</code></pre>
+              <pre><code contenteditable class="java">val name: String = "AndroidDeveloperBackstage"</code></pre>
 
-              <pre class="fragment"><code contenteditable class="java">val name: String = "Mobilization"   ; // yay semicolons, GREAT!!!</code></pre>
+              <pre class="fragment"><code contenteditable class="java">val name: String = "AndroidDeveloperBackstage"   ; // yay semicolons, GREAT!!!</code></pre>
             </div>
           </section>
 
@@ -449,34 +449,6 @@ class ActivityB extends SomethingFromAFrameworkActivity
 }</code></pre>
             </div>
           </section>
-
-          <section>
-            <h2>A trait for ContentView</h2>
-            Let's replace good ol' <b>setContentView</b> with a Trait:
-
-            <pre><code contenteditable class="java">trait ContentView extends Activity with TypedActivity {
-
-  // force the user to implement this "method? / field?"
-  def ContentView: TypedLayout
-
-  override def onCreate(bundle: Bundle) {
-    setContentView(ContentView.id)
-    super.onCreate(bundle)
-  }
-} </code></pre>
-          </section>
-
-          <section>
-            <h2>with ContentView</h2>
-            <pre><code contenteditable class="java">class LoginActivity extends ScalaActivity
-  with ViewListenerConversions
-  with ContentView {
-
-  // we implement the def ContentView with a value!
-  val ContentView = TR.layout.login
-}</code></pre>
-          </section>
-
           <section>
             <h2>Mix and match</h2>
             In my small "<a href="http://ktoso.github.com/scala-words/">ScalaWords</a>" library a typical pattern is:
@@ -676,6 +648,13 @@ def example()(implicit ctx: Context) = "I have " + ctx</code></pre>
                 <br>
                 <pre><code contenteditable class="java">SomeTextView.:=("Hello World!")</code></pre>
               </div>
+              
+              <div class="fragment">
+                <br>
+                you can use other "<em>mych more</em>", <br>.
+                <br>
+                <pre><code contenteditable class="java">! % & * + - / : < = > ? @ \ ^ | ~</code></pre>
+              </div>
             </div>
           </section>
 
@@ -807,59 +786,7 @@ editor.commit();</code></pre>
         <!-- ------------------------------------------------------------------------------------------------------ -->
 
         <section>
-          <section>
-            <h2>Passing around <b>Intent</b>s</h2>
-            Create it with some data:
-            <pre><code contenteditable class="java">Intent intent = new Intent(this, A.class);
-intent.putExtra("user_id", 1234);
-intent.putExtra("data", new SomeData());
-startActivity(intent);</code></pre>
-
-            <div class="fragment">
-              Recieve it (in <em>A</em>):
-              <pre><code contenteditable class="java">public class A extends Activity {
-
-@Override
-public void onCreate(Bundle savedInstance) {
-  super.onCreate(savedInstance);
-
-  int userId = getIntent().getIntExtra("user_id");
-  SomeData data = (SomeData) getIntent().getSerializableExtra("data");
-}</code></pre>
-            </div>
-
-          </section>
-
-          <section>
-            <h2>"Intents" Pattern</h2>
-            Something I used to lessen the pain of this:
-            <br>
-            Create:
-            <pre><code contenteditable class="java">Intents.Login.show()</code></pre>
-
-            Read:
-            <pre><code contenteditable class="java">public class A extends Activity {
-
-@Override
-public void onCreate(Bundle savedInstance) {
-  super.onCreate(savedInstance);
-
-  LoginData data = Intents.Login.getData(getIntent());
-}</code></pre>
-
-            <div class="fragment">
-              Group intents logically:
-
-              <pre><code contenteditable class="java">interface Intents {
-  abstract class Login { /*...*/ }
-  abstract class Messages { /*...*/ }
-
-  // etc...
-}</code></pre>
-            </div>
-          </section>
-
-          <section>
+         <section>
             <h2><b>Pattern Matching </b> and <b>Extractors</b></h2>
             Instead of:
             <pre><code contenteditable class="java">if("Bob".equals(person.getName()) {
@@ -942,6 +869,20 @@ val data2 = Data.apply(2)</code></pre>
 
         <!-- ------------------------------------------------------------------------------------------------------ -->
         <section>
+			
+		<section>
+		<h1 class="fragment">Build It</h1>
+          <h2 class="fragment">Starting procedures</h2> 
+          <ol> <li class="fragment"> Install <b>SBT</b> (build tool) </li>
+          <li class="fragment">  Install  <b>[Intellij IDEA] </b> (or Android Studio) </li>
+           <li class="fragment"> Add <b>Scala</b> and <b>SBT</b> plugins to IDEA </li>
+           <li class="fragment"> Add  <b>Android</b> https://github.com/pfn/android-sdk-plugin) and <b>IDEA</b>https://github.com/mpeltonen/sbt-idea) plugins to SBT </li>
+           <li class="fragment"> Write a build file </li>
+          <li class="fragment">  Generate IDE project files </li>
+           <li class="fragment"> Run or In utter rage, post in the Mailing list https://groups.google.com/forum/#!forum/scala-on-android </li>
+          </ol>
+        </section>
+			
           <section>
             <h2>SBT</h2>
             Simple Build Tool
@@ -966,7 +907,27 @@ val data2 = Data.apply(2)</code></pre>
               <li class="fragment"><b>Type Safe</b>!!!</li>
             </ul>
           </section>
+		
+		<section>
+            <h2>SBT</h2> 
+            <pre><code contenteditable class="scala">
+import android.Keys._
+android.Plugin.androidBuild
 
+name := "Project-name"
+
+version := "1.0"
+
+platformTarget in Android := "android-19"
+
+libraryDependencies ++= Seq(
+  "com.loopj.android" % "android-async-http" % "1.4.4",
+  "com.android.support" % "support-v13" % "19.1.0",
+  aar("com.google.android.gms" % "play-services" % "4.0.30")
+)
+</code></pre>
+          </section>         
+          
           <section>
             <h2>Sbt ~test</h2>
             ~ runs a command, each time a source file changes.
@@ -980,6 +941,191 @@ val data2 = Data.apply(2)</code></pre>
           </section>
 
 
+        </section>
+
+        <!-- ------------------------------------------------------------------------------------------------------ -->
+
+        <section>
+						 
+			 <section>
+			 <h2>What is wrong</h2>
+			 <ol> 
+				 <li class="fragment"> proguard </li>
+				 <li class="fragment"> InteliJ idea </li>
+				 <li class="fragment"> scala backward compatibility </li>
+			</ol>
+			</section>
+			
+			 <section >
+			 <h2>Proguard hell</h2>
+			 </section>
+			<section>
+			  
+			  Scala library is around 5 MB <br/>
+			  ↓<br/>
+			  Squeeze it with ProGuard<br/>
+			  ↓<br/>
+			  Build time goes up to 1 min / 10K LOC;<br/>
+			  ProGuard config takes some effort<br/>
+
+			  <img src="http://www.picgifs.com/graphics/f/flies/graphics-flies-254732.gif"/>
+			</section>
+			
+        </section>
+        
+         <section>
+          <section data-markdown>
+            ## Bricks
+
+            ```scala
+            w[Button]
+            ```
+          </section>
+          <section data-markdown>
+            ## Bricks
+
+            ```scala
+            l[LinearLayout](
+              w[Button],
+              w[TextView]
+            )
+            ```
+          </section>
+          <section data-markdown>
+            ## Bricks
+
+            ```scala
+            val brick1 = w[Button]
+            val brick2 = w[TextView]
+
+            l[LinearLayout](
+              brick1, brick2
+            )
+            ```
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            ## Tweaks
+
+            ```scala
+            w[TextView] <~ text("Hello")
+            ```
+          </section>
+          <section data-markdown>
+            ## Tweaks
+            
+            ```scala
+            def largeText(str: String) =
+              text(str) +
+              TextSize.large +
+              padding(left = 8 dp)
+
+            myTextView <~ largeText("Hello")
+            ```
+          </section>
+        </section>
+
+        <section data-markdown class="smaller-code">
+          ## A complete layout
+
+          ```scala
+          var greeting = slot[TextView]
+ 
+          l[LinearLayout](
+            w[Button] <~
+              text("Greet me!") <~
+              On.click {
+                greeting <~ show
+              },
+              
+            w[TextView] <~
+              text("Hello there") <~
+              wire(greeting) <~ hide 
+          )
+          ```
+        </section>
+
+        <section>
+          <section data-markdown>
+            ## Snails
+
+            ```scala
+            myTextView <~~ fadeIn(400)
+            ```
+          </section>
+          <section data-markdown>
+            ## Snails
+
+            ```scala
+            myTextView <~~
+              fadeIn(400) <~
+              text("Faded!")
+            ```
+          </section>
+          <section data-markdown>
+            ## Snails
+            
+            ```scala
+            val blink =
+              fadeIn(400) ++
+              delay(2000) ++
+              fadeOut(400)
+
+            myTextView <~~ blink
+            ```
+          </section>
+        </section>
+
+        <section>
+          <section data-markdown>
+            ## UI actions
+
+            ```scala
+            val action =
+              myTextView <~ text("Foo") <~ show
+            ```
+          </section>
+          <section data-markdown>
+            ## UI actions
+
+            ```scala
+            val action1 =
+              myTextView <~ text("Foo") <~ show
+
+            val action2 =
+              myProgressBar <~ hide
+
+            runUi(action1 ~ action2)
+            ```
+          </section>
+          <section data-markdown class="smaller-code">
+            ## UI actions
+
+            ```scala
+            runUi {
+              (myProgressBar <~~ fadeOut(400)) ~~
+              (myTextView <~~ blink) ~~
+              (myOtherTextView <~ text("’SUP?"))
+            }
+            ```
+          </section>
+        </section>
+
+        <section data-markdown class="smaller-code">
+          ## Tweaks & Signals
+
+          ```scala
+          // create a reactive variable
+          val caption = rx.Var("Olá")
+
+          // set text to “Olá”
+          myTextView <~ caption.map(text)
+
+          // text automatically updates to “Adeus”
+          caption.update("Adeus")
+          ```
         </section>
 
         <!-- ------------------------------------------------------------------------------------------------------ -->
@@ -1042,8 +1188,8 @@ val data2 = Data.apply(2)</code></pre>
 
             <div class="inverted right">
                 slides are googlable <br/>
-                or @ <a href="http://www.blog.project13.pl">blog.project13.pl</a> <br>
-              <small>Konrad Malawski @ Mobilization 2012</small>
+              <small>Krzysztof Pecyna @ AndroidDeveloperBackstage 2014</small>
+              <small> *ale prezentacje ukradł od Konrada Malawskiego</small>
             </div>
         </section>
     </div>
