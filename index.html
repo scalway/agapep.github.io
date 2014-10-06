@@ -942,6 +942,162 @@ libraryDependencies ++= Seq(
 
 
         </section>
+        
+        <!-- ------------------------------------------------------------------------------------------------------ -->
+                 <section>
+          <section >
+            <h2> Bricks</h2>
+
+           <pre><code contenteditable class="java">
+            w[Button]
+            </pre></code>
+          </section>
+          <section >
+            <h2> Bricks</h2>
+
+           <pre><code contenteditable class="java">
+            l[LinearLayout](
+              w[Button],
+              w[TextView]
+            )
+            </pre></code>
+          </section>
+          <section >
+            <h2> Bricks</h2>
+
+           <pre><code contenteditable class="java">
+            val brick1 = w[Button]
+            val brick2 = w[TextView]
+
+            l[LinearLayout](
+              brick1, brick2
+            )
+            </pre></code>
+          </section>
+        </section>
+
+        <section>
+          <section >
+            <h2> Tweaks</h2>
+
+           <pre><code contenteditable class="java">
+            w[TextView] <~ text("Hello")
+            </pre></code>
+          </section>
+          <section >
+            <h2> Tweaks</h2>
+            
+           <pre><code contenteditable class="java">
+            def largeText(str: String) =
+              text(str) +
+              TextSize.large +
+              padding(left = 8 dp)
+
+            myTextView <~ largeText("Hello")
+            </pre></code>
+          </section>
+        </section>
+
+        <section  class="smaller-code">
+          <h2> A complete layout</h2>
+
+         <pre><code contenteditable class="java">
+          var greeting = slot[TextView]
+ 
+          l[LinearLayout](
+            w[Button] <~
+              text("Greet me!") <~
+              On.click {
+                greeting <~ show
+              },
+              
+            w[TextView] <~
+              text("Hello there") <~
+              wire(greeting) <~ hide 
+          )
+          </pre></code>
+        </section>
+
+        <section>
+          <section >
+            <h2> Snails</h2>
+
+           <pre><code contenteditable class="java">
+            myTextView <~~ fadeIn(400)
+            </pre></code>
+          </section>
+          <section >
+            <h2> Snails</h2>
+
+           <pre><code contenteditable class="java">
+            myTextView <~~
+              fadeIn(400) <~
+              text("Faded!")
+            </pre></code>
+          </section>
+          <section >
+            <h2> Snails
+            
+           <pre><code contenteditable class="java">
+            val blink =
+              fadeIn(400) ++
+              delay(2000) ++
+              fadeOut(400)
+
+            myTextView <~~ blink
+            </pre></code>
+          </section>
+        </section>
+
+        <section>
+          <section >
+            <h2> UI actions</h2>
+
+           <pre><code contenteditable class="java">
+            val action =
+              myTextView <~ text("Foo") <~ show
+            </pre></code>
+          </section>
+          <section >
+            <h2> UI actions</h2>
+
+           <pre><code contenteditable class="java">
+            val action1 =
+              myTextView <~ text("Foo") <~ show
+
+            val action2 =
+              myProgressBar <~ hide
+
+            runUi(action1 ~ action2)
+            </pre></code>
+          </section>
+          <section  class="smaller-code">
+            <h2> UI actions</h2>
+
+           <pre><code contenteditable class="java">
+            runUi {
+              (myProgressBar <~~ fadeOut(400)) ~~
+              (myTextView <~~ blink) ~~
+              (myOtherTextView <~ text("’SUP?"))
+            }
+            </pre></code>
+          </section>
+        </section>
+
+        <section  class="smaller-code">
+          <h2> Tweaks & Signals</h2>
+
+         <pre><code contenteditable class="java">
+          // create a reactive variable
+          val caption = rx.Var("Olá")
+
+          // set text to “Olá”
+          myTextView <~ caption.map(text)
+
+          // text automatically updates to “Adeus”
+          caption.update("Adeus")
+          </pre></code>
+        </section>
 
         <!-- ------------------------------------------------------------------------------------------------------ -->
 
@@ -973,160 +1129,7 @@ libraryDependencies ++= Seq(
 			
         </section>
         
-         <section>
-          <section data-markdown>
-            ## Bricks
 
-            ```scala
-            w[Button]
-            ```
-          </section>
-          <section data-markdown>
-            ## Bricks
-
-            ```scala
-            l[LinearLayout](
-              w[Button],
-              w[TextView]
-            )
-            ```
-          </section>
-          <section data-markdown>
-            ## Bricks
-
-            ```scala
-            val brick1 = w[Button]
-            val brick2 = w[TextView]
-
-            l[LinearLayout](
-              brick1, brick2
-            )
-            ```
-          </section>
-        </section>
-
-        <section>
-          <section data-markdown>
-            ## Tweaks
-
-            ```scala
-            w[TextView] <~ text("Hello")
-            ```
-          </section>
-          <section data-markdown>
-            ## Tweaks
-            
-            ```scala
-            def largeText(str: String) =
-              text(str) +
-              TextSize.large +
-              padding(left = 8 dp)
-
-            myTextView <~ largeText("Hello")
-            ```
-          </section>
-        </section>
-
-        <section data-markdown class="smaller-code">
-          ## A complete layout
-
-          ```scala
-          var greeting = slot[TextView]
- 
-          l[LinearLayout](
-            w[Button] <~
-              text("Greet me!") <~
-              On.click {
-                greeting <~ show
-              },
-              
-            w[TextView] <~
-              text("Hello there") <~
-              wire(greeting) <~ hide 
-          )
-          ```
-        </section>
-
-        <section>
-          <section data-markdown>
-            ## Snails
-
-            ```scala
-            myTextView <~~ fadeIn(400)
-            ```
-          </section>
-          <section data-markdown>
-            ## Snails
-
-            ```scala
-            myTextView <~~
-              fadeIn(400) <~
-              text("Faded!")
-            ```
-          </section>
-          <section data-markdown>
-            ## Snails
-            
-            ```scala
-            val blink =
-              fadeIn(400) ++
-              delay(2000) ++
-              fadeOut(400)
-
-            myTextView <~~ blink
-            ```
-          </section>
-        </section>
-
-        <section>
-          <section data-markdown>
-            ## UI actions
-
-            ```scala
-            val action =
-              myTextView <~ text("Foo") <~ show
-            ```
-          </section>
-          <section data-markdown>
-            ## UI actions
-
-            ```scala
-            val action1 =
-              myTextView <~ text("Foo") <~ show
-
-            val action2 =
-              myProgressBar <~ hide
-
-            runUi(action1 ~ action2)
-            ```
-          </section>
-          <section data-markdown class="smaller-code">
-            ## UI actions
-
-            ```scala
-            runUi {
-              (myProgressBar <~~ fadeOut(400)) ~~
-              (myTextView <~~ blink) ~~
-              (myOtherTextView <~ text("’SUP?"))
-            }
-            ```
-          </section>
-        </section>
-
-        <section data-markdown class="smaller-code">
-          ## Tweaks & Signals
-
-          ```scala
-          // create a reactive variable
-          val caption = rx.Var("Olá")
-
-          // set text to “Olá”
-          myTextView <~ caption.map(text)
-
-          // text automatically updates to “Adeus”
-          caption.update("Adeus")
-          ```
-        </section>
 
         <!-- ------------------------------------------------------------------------------------------------------ -->
 
